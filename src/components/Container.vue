@@ -1,35 +1,14 @@
 <template>
   <div class="c-container">
     <div class="topic">
-      <!-- {{ serched }}
-      {{ starSorted }}-->
-      <input
-        @change="serch()"
-        class="serch"
-        type="text"
-        placeholder="キーワードで検索"
-        v-model="keyword"
-      />
-      <i
-        v-if="orderDirection"
-        class="far fa-caret-square-down order-icon"
-        @click="toOldestSort()"
-      ></i>
-      <i
-        v-else
-        class="far fa-caret-square-up order-icon"
-        @click="toLatestSort()"
-      ></i>
+      <input @change="serch()" class="serch" type="text" placeholder="キーワードで検索" v-model="keyword" />
+      <i v-if="orderDirection" class="far fa-caret-square-down order-icon" @click="toOldestSort()"></i>
+      <i v-else class="far fa-caret-square-up order-icon" @click="toLatestSort()"></i>
       <i class="far fa-star star-icon" @click="starSort()"></i>
       <i v-if="starSorted" class="fas fa-star bg-star-icon"></i>
     </div>
     <div v-if="this.posts.length !== 0" class="card-container">
-      <div
-        class="card"
-        v-for="(post, index) in this.posts"
-        :key="index"
-        @click="showText(index)"
-      >
+      <div class="card" v-for="(post, index) in this.posts" :key="index" @click="showText(index)">
         <div class="tweet-card">
           <i v-if="post.liked" class="fas fa-star sub-star-icon"></i>
           <div class="card-tittle">{{ post.tittle }}</div>
@@ -129,12 +108,12 @@ export default {
       }
       store.commit("setDisplayPosts", posts);
       this.starSorted = !this.starSorted;
-    },
+    }
   },
   computed: {
     posts: function() {
       return this.$store.state.displayposts;
-    },
+    }
   },
   created() {
     let user = firebase.auth().currentUser;
@@ -144,15 +123,15 @@ export default {
       .doc(uid)
       .collection("posts")
       .orderBy("createdAt");
-    this.unsubscribe = ref.onSnapshot((snapshot) => {
+    this.unsubscribe = ref.onSnapshot(snapshot => {
       let posts = [];
-      snapshot.forEach((doc) => {
+      snapshot.forEach(doc => {
         const post = {
           docid: doc.id,
           tittle: doc.data().tittle,
           text: doc.data().text.replace(/<br>/g, "\n"),
           liked: doc.data().liked,
-          createdAt: doc.data().createdAt,
+          createdAt: doc.data().createdAt
         };
         posts.push(post);
       });
@@ -165,7 +144,7 @@ export default {
   destroyed() {
     this.unsubscribe();
     this.unsubscribe = null;
-  },
+  }
 };
 </script>
 
