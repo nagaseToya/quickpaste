@@ -1,17 +1,556 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>icon.png" sizes="200x200" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <link
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/v-tooltip"></script>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Noto+Sans+JP");
+    @import url("https://fonts.googleapis.com/css?family=Amatic+SC:700");
+
+    @media screen and (max-width: 639px) {
+      /*スマホ用のcssを記述*/
+    }
+
+    @media only screen and (min-width: 640px) and (max-width: 1024px) {
+      /*tablet用のcssを記述*/
+      .pc {
+        display: none;
+      }
+      /* header */
+      header {
+        width: 100%;
+        height: 10%;
+        top: 0%;
+        left: 0%;
+        background: #ccc;
+        position: fixed; /* 位置指定の基準点にする */
+        z-index: 1;
+      }
+      .tittle {
+        font-size: 30px;
+        width: 150px; /* 幅指定 */
+        margin: auto; /* 中央寄せ */
+        position: absolute; /* 位置指定 */
+        top: 20; /* 位置指定 */
+        bottom: 0; /* 位置指定 */
+        left: 0; /* 位置指定 */
+        right: 0; /* 位置指定 */
+      }
+      .backHome {
+        position: relative;
+        font-size: 40px;
+        margin: 20px 0px 0px 30px;
+        color: rgb(253, 253, 253);
+        float: left;
+      }
+      /* showpage */
+      .c-showpage {
+        width: 60%;
+        height: 90%;
+        top: 10%;
+        left: 40%;
+        background: rgb(160, 172, 171);
+        position: fixed; /* 位置指定の基準点にする */
+        z-index: 0;
+      }
+      .text-holder {
+        width: 80%;
+        height: 80%;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+      }
+      .input-tittle {
+        border: 2px solid #1abc9c; /* 枠線 */
+        border-radius: 0.67em; /* 角丸 */
+        padding: 0.5em; /* 内側の余白量 */
+        margin: 0% 0% 4% 0%;
+        background-color: rgb(179, 179, 179); /* 背景色 */
+        width: 100%; /* 横幅いっぱいにする */
+        box-sizing: border-box; /* ※これがないと横にはみ出る */
+        height: 50px; /* 高さ */
+        font-size: 1em; /* 文字サイズ */
+        line-height: 1.2; /* 行の高さ */
+        z-index: 10;
+        opacity: 1;
+      }
+      .input-tittle:focus {
+        border-color: skyblue; /* 枠線の色 */
+        background-color: #c7ddd8; /* 背景色 */
+        outline: none; /* ※ブラウザが標準で付加する線を消したいとき */
+      }
+
+      .textlines {
+        border: 2px solid #1abc9c; /* 枠線 */
+        border-radius: 0.67em; /* 角丸 */
+        padding: 0.5em; /* 内側の余白量 */
+        background-color: rgb(179, 179, 179); /* 背景色 */
+        width: 100%; /* 横幅いっぱいにする */
+        box-sizing: border-box; /* ※これがないと横にはみ出る */
+        height: 335px; /* 高さ */
+        font-size: 1em; /* 文字サイズ */
+        line-height: 1.2; /* 行の高さ */
+        z-index: 10;
+        opacity: 1;
+      }
+      .textlines:focus {
+        border-color: skyblue; /* 枠線の色 */
+        background-color: #c7ddd8; /* 背景色 */
+        outline: none; /* ※ブラウザが標準で付加する線を消したいとき */
+      }
+      /* container */
+      .c-container {
+        width: 40%;
+        height: 90%;
+        top: 10%;
+        left: 0%;
+        background: rgb(255, 255, 255);
+        position: fixed;
+        z-index: 2;
+      }
+      .addCard {
+        width: 100%;
+        height: 10%;
+        top: 0%;
+        left: 0%;
+        background: rgb(167, 169, 196);
+        position: absolute; /* 位置指定の基準点にする */
+        z-index: 4;
+      }
+      .card {
+        width: 100%;
+        height: 10%;
+        top: 10%;
+        left: 0%;
+        background: rgb(143, 147, 201);
+        position: relative; /* 位置指定の基準点にする */
+        z-index: 1;
+      }
+      .card-container {
+        overflow: scroll;
+        width: 40%;
+        height: 90%;
+        top: 10%;
+        left: 0%;
+        background: rgb(255, 255, 255);
+        position: fixed;
+        z-index: 0;
+      }
+    }
+
+    @media screen and (min-width: 1025px) {
+      /*pc用のcssを記述*/
+      .ipad {
+        display: none;
+      }
+      /* header */
+      header {
+        width: 20%;
+        height: 100%;
+        top: 0%;
+        left: 0%;
+        background: #1a1a1a;
+        position: fixed; /* 位置指定の基準点にする */
+        z-index: -1;
+      }
+
+      .serch {
+        color: #545454;
+        font-size: 15px;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        top: 7%;
+        left: 30%;
+        z-index: 10;
+        width: 15%;
+        height: 2%;
+        display: -webkit-flex;
+        display: flex;
+        outline: 0; /*クリック時の青い枠線消す*/
+        -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
+        align-items: center; /* 縦方向中央揃え */
+        -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
+        justify-content: center;
+      }
+      .serch:focus::placeholder {
+        color: transparent;
+        background: #eef6ff; /* フォーカス時の背景色  */
+      }
+
+      .addCard {
+        width: 18%;
+        height: 4%;
+        top: 20%;
+        left: 1%;
+        background: #4ea930;
+        position: fixed; /* 位置指定の基準点にする */
+        z-index: 4;
+        font-family: "Noto Sans JP", sans-serif;
+        color: #ffffff;
+        font-size: 18px;
+        border-radius: 100px;
+        line-height: 30px;
+      }
+      .addCard:hover {
+        background-color: #419029;
+      }
+      .shorten {
+        width: 18%;
+        height: 4%;
+        top: 29.5%;
+        left: 1%;
+        background: #0984e3;
+        position: fixed; /* 位置指定の基準点にする */
+        z-index: 4;
+        font-family: "Noto Sans JP", sans-serif;
+        color: #ffffff;
+        font-size: 18px;
+        border-radius: 100px;
+        line-height: 30px;
+      }
+      .shorten:hover {
+        background-color: #0985e398;
+      }
+      .tittle {
+        font-size: 30px;
+        width: 150px; /* 幅指定 */
+        margin: auto; /* 中央寄せ */
+        position: absolute; /* 位置指定 */
+        top: 20; /* 位置指定 */
+        bottom: 0; /* 位置指定 */
+        left: 0; /* 位置指定 */
+        right: 0; /* 位置指定 */
+      }
+      .user-info-container {
+        width: 18%;
+        height: 4%;
+        top: 90%;
+        left: 1%;
+        background: #585151;
+        position: fixed; /* 位置指定の基準点にする */
+        z-index: 4;
+        font-family: "Noto Sans JP", sans-serif;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 10px;
+        line-height: 30px;
+      }
+      .user-info-container:hover {
+        background-color: #b3b3b3;
+      }
+      /* showpage */
+      .c-showpage {
+        width: 55%;
+        height: 100%;
+        top: 0%;
+        left: 45%;
+        background: rgb(255, 255, 255);
+        border: thin solid #c5c5c5;
+        position: fixed; /* 位置指定の基準点にする */
+        z-index: -1;
+      }
+      .text-holder {
+        width: 80%;
+        height: 85%;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+      }
+      .i-text-holder {
+        width: 80%;
+        height: 90%;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+      }
+      .text-container {
+        top: 10%;
+        left: 0%;
+        width: 100%;
+        height: 75%;
+        position: absolute;
+        border-radius: 0.67em; /* 角丸 */
+        border: 2px solid #f2f2f2; /* 枠線 */
+      }
+      .dev-text-container {
+        top: 10%;
+        left: 0%;
+        width: 100%;
+        height: 62%;
+        position: absolute;
+        border-radius: 0.67em; /* 角丸 */
+        border: 2px solid #f2f2f2; /* 枠線 */
+      }
+      .submit {
+        position: absolute;
+        width: 50%;
+        height: 8%;
+        top: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 2%;
+        border-radius: 0.67em; /* 角丸 */
+        background-color: #e6d8d2;
+        align-items: center; /* 縦方向中央揃え */
+      }
+      .submit:hover {
+        background-color: #a78f8d;
+        color: #f2f2f2;
+      }
+      .add-icon {
+        top: 0%;
+        left: 85%;
+        width: 5%;
+        height: 50%;
+        float: left;
+        position: relative;
+        font-size: 25px;
+        color: #e64e40;
+        padding: 2%;
+        margin: 8px;
+        border-radius: 50%; /* 角丸 */
+      }
+      .add-icon:hover {
+        background-color: #fdfdfd;
+      }
+      .input-tittle {
+        border: 2px solid #f2f2f2; /* 枠線 */
+        font-family: "Noto Sans JP", sans-serif;
+        border-radius: 0.67em;
+        padding: 0.5em; /* 内側の余白量 */
+        margin: 2.5% 0% 2% 0%;
+        background-color: rgb(255, 255, 255); /* 背景色 */
+        width: 100%; /* 横幅いっぱいにする */
+        box-sizing: border-box; /* ※これがないと横にはみ出る */
+        height: 50px; /* 高さ */
+        font-size: 1em; /* 文字サイズ */
+        line-height: 1.2; /* 行の高さ */
+        z-index: 10;
+        opacity: 1;
+        font-family: "Noto Sans JP", sans-serif;
+      }
+      .input-tittle:focus {
+        border-color: skyblue; /* 枠線の色 */
+        background-color: #f2f2f2; /* 背景色 */
+        outline: none; /* ※ブラウザが標準で付加する線を消したいとき */
+      }
+
+      .textlines {
+        border: 2px solid #f2f2f2; /* 枠線 */
+        font-family: "Noto Sans JP", sans-serif;
+        border-radius: 0.67em; /* 角丸 */
+        padding: 0.5em; /* 内側の余白量 */
+        background-color: rgb(255, 255, 255); /* 背景色 */
+        width: 100%; /* 横幅いっぱいにする */
+        box-sizing: border-box; /* ※これがないと横にはみ出る */
+        height: 335px; /* 高さ */
+        font-size: 1em; /* 文字サイズ */
+        line-height: 1.2; /* 行の高さ */
+        z-index: 10;
+        opacity: 1;
+        font-family: "Noto Sans JP", sans-serif;
+      }
+      .textlines:focus {
+        border-color: skyblue; /* 枠線の色 */
+        background-color: #f2f2f2; /* 背景色 */
+        outline: none; /* ※ブラウザが標準で付加する線を消したいとき */
+      }
+      .showtittle {
+        top: 0%;
+        left: 0%;
+        position: absolute;
+        height: 10%;
+        max-width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        font-family: "Noto Sans JP", sans-serif;
+        font-size: 170%;
+      }
+      .show-text-container {
+        top: 10%;
+        left: 0%;
+        width: 100%;
+        height: 80%;
+        position: absolute;
+        border-radius: 0.67em; /* 角丸 */
+        border: 2px solid #f2f2f2; /* 枠線 */
+      }
+      .text-tittle {
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 5%;
+        float: left;
+        position: relative;
+        background-color: #f2f2f2;
+        font-family: "Noto Sans JP", sans-serif;
+      }
+      .i-text-tittle {
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 10%;
+        float: left;
+        position: relative;
+        background-color: #f2f2f2;
+        font-family: "Noto Sans JP", sans-serif;
+      }
+      .showtext {
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 90%;
+        float: left;
+        position: relative;
+        box-sizing: border-box; /* ※これがないと横にはみ出る */
+        font-size: 1em; /* 文字サイズ */
+        line-height: 1.2; /* 行の高さ */
+        border: 2px solid #f2f2f2; /* 枠線 */
+        font-family: "Noto Sans JP", sans-serif;
+      }
+      .showtext:focus {
+        border-color: skyblue; /* 枠線の色 */
+        background-color: #f2f2f2; /* 背景色 */
+        outline: none; /* ※ブラウザが標準で付加する線を消したいとき */
+      }
+
+      .crip-theme {
+        font-size: 20px;
+        color: #686868;
+        top: 10%;
+        left: 20%;
+        float: left;
+        position: relative;
+        padding: 1%;
+      }
+      .dev {
+        margin-top: 30px;
+      }
+      /* container */
+      .c-container {
+        width: 25%;
+        height: 100%;
+        top: 0%;
+        left: 20%;
+        background: rgb(255, 255, 255);
+        position: fixed;
+        z-index: 2;
+      }
+      .topic {
+        width: 24.9%;
+        height: 10%;
+        top: 0%;
+        left: 20%;
+        background: #f8f8f8;
+        border: thin solid #c5c5c5;
+        position: fixed; /* 位置指定の基準点にする */
+        z-index: 1;
+        font-family: "Noto Sans JP", sans-serif;
+      }
+      .card {
+        width: 100%;
+        height: 130px;
+        top: 0%;
+        left: 0%;
+        background: #f8f8f8;
+        border: thin solid #c5c5c5;
+        position: relative; /* 位置指定の基準点にする */
+        z-index: 1;
+      }
+      .card-container {
+        overflow: scroll;
+        width: 25%;
+        height: 90%;
+        top: 10%;
+        left: 20%;
+        background: rgb(255, 255, 255);
+        position: fixed;
+        z-index: 0;
+      }
+      .tweet-card {
+        position: relative;
+        top: 10%;
+        left: 0%;
+        height: 70%;
+      }
+      .card-container :hover {
+        background-color: #f2f2f2;
+      }
+      .card-tittle {
+        top: 3%;
+        left: 10%;
+        height: 30%;
+        float: left;
+        max-width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        position: relative;
+        font-family: "Noto Sans JP", sans-serif;
+        font-weight: 600;
+      }
+      .card-text {
+        top: 40%;
+        left: 15%;
+        position: absolute;
+        float: left;
+        height: 50%;
+        max-width: 80%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        font-family: "Noto Sans JP", sans-serif;
+        opacity: 0.6;
+      }
+      .explain-container {
+        width: 24.9%;
+        height: 90%;
+        top: 10%;
+        left: 20%;
+        background: #f8f8f8;
+        position: fixed;
+        z-index: 1;
+        border: thin solid #c5c5c5;
+      }
+      .exp-card-1 {
+        position: relative;
+        top: 0%;
+        left: 0%;
+        height: 8%;
+        border: thin solid #c5c5c5;
+      }
+      .exp-card {
+        position: relative;
+        top: 0%;
+        left: 0%;
+        height: 10%;
+        border: thin solid #c5c5c5;
+      }
+      .exp-card :hover {
+        background-color: #c5c5c5;
+      }
+    }
+  </style>
 </html>
