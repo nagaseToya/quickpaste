@@ -5,10 +5,6 @@
       <div class="holder">
         <div class="site-title">QuickPaste</div>
         <div class="login-text">いつもの言葉を、もっと手軽に</div>
-        <!-- <div class="login-card" @click="googleLogin()">
-          <img src="../assets/google_logo.png" class="google-logo" />
-          <span class="login-text">Login with Google</span>
-        </div>-->
         <div class="signup-card">
           <span class="signup-text" @click="signup()">Login with Google</span>
         </div>
