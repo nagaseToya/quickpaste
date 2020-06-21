@@ -51,10 +51,9 @@ export default {
         .get(endpoint)
         .then((response) => {
           this.shortenUrl = response.data.data.url;
-          console.log(response.data.data.url);
         })
         .catch((e) => {
-          console.log(e);
+          alert(e);
         });
     },
     copy() {
