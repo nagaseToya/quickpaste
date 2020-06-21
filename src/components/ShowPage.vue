@@ -16,9 +16,7 @@
           <div class="text-tittle"></div>
           <input v-model="tittle" type="text" class="input-tittle" placeholder="タイトル" />
           <textarea v-model="text" class="textlines" placeholder="保存したい文章を記入してください！"></textarea>
-          <div class="add-circle" @click="add()">
-            <i class="fas fa-paperclip add-icon" v-tooltip.top-center="'保存'"></i>
-          </div>
+          <i class="fas fa-paperclip add-icon" v-tooltip.top-center="'保存'" @click="add()"></i>
         </div>
       </div>
     </div>
@@ -107,8 +105,7 @@ export default {
         this.text = "";
         this.$toasted.success("追加しました！");
       } else {
-        // this.$toasted.error("まだ書き終わってないです😓");
-        alert("まだ書き終わってないです😓");
+        this.$toasted.error("まだ書き終わってないです😓");
       }
     },
     edit() {

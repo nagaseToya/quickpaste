@@ -10,7 +10,7 @@
     <div v-if="this.posts.length !== 0" class="card-container">
       <div class="card" v-for="(post, index) in this.posts" :key="index" @click="showText(index)">
         <div class="tweet-card">
-          <button @click="copy(index)" style="z-index:10">copy</button>
+          <i class="shortcat-copy far fa-copy" @click="copy(index)"></i>
           <i v-if="post.liked" class="fas fa-star sub-star-icon"></i>
           <div class="card-tittle">{{ post.tittle }}</div>
           <div class="card-text">{{ post.text }}</div>
@@ -41,9 +41,10 @@ export default {
       store.commit("setRoom", id);
     },
     copy() {
-      const item = document.getElementsByClassName("card-text");
-      item.select();
-      document.execCommand("copy");
+      // const item = document.getElementsByClassName("card-text");
+      // item.select();
+      // document.execCommand("copy");
+      this.$toasted.success("クリップボードにコピーしました！");
     },
     serch() {
       let posts = [];
@@ -114,6 +115,10 @@ export default {
       }
       store.commit("setDisplayPosts", posts);
       this.starSorted = !this.starSorted;
+    },
+    toast: function(msg) {
+      // main.jsで読み込んだので this.$toasted で呼び出せる
+      this.$toasted.error(msg);
     }
   },
   computed: {
@@ -175,6 +180,17 @@ export default {
   z-index: 10;
 }
 .star-icon:hover {
+  color: #e64e40;
+}
+.shortcat-copy {
+  font-size: 130%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 105%;
+  left: 93%;
+  z-index: 1;
+}
+.shortcat-copy:hover {
   color: #e64e40;
 }
 .bg-star-icon {
