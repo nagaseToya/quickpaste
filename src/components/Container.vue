@@ -10,6 +10,7 @@
     <div v-if="this.posts.length !== 0" class="card-container">
       <div class="card" v-for="(post, index) in this.posts" :key="index" @click="showText(index)">
         <div class="tweet-card">
+          <button @click="copy(index)" style="z-index:10">copy</button>
           <i v-if="post.liked" class="fas fa-star sub-star-icon"></i>
           <div class="card-tittle">{{ post.tittle }}</div>
           <div class="card-text">{{ post.text }}</div>
@@ -38,6 +39,11 @@ export default {
     setRoom(id) {
       store.commit("setPost", this.posts[id - 1]);
       store.commit("setRoom", id);
+    },
+    copy() {
+      const item = document.getElementsByClassName("card-text");
+      item.select();
+      document.execCommand("copy");
     },
     serch() {
       let posts = [];
