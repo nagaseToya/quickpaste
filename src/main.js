@@ -4,8 +4,11 @@ import router from "./router";
 import store from "./store";
 import Toasted from "vue-toasted";
 import VTooltip from "v-tooltip";
+import axios from "axios"; //追記
+import VueAxios from "vue-axios"; //追記
 
-Vue.use(VTooltip);
+Vue.use(VTooltip, VueAxios, axios);
+Vue.prototype.$axios = axios; // この行を追加
 
 var options = {
   theme: "toasted-primary",
