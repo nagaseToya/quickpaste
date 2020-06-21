@@ -28,7 +28,12 @@ import firebase from "firebase";
 
 export default {
   data: function() {
-    return { serched: false, orderDirection: false, starSorted: false };
+    return {
+      serched: false,
+      orderDirection: false,
+      starSorted: false,
+      keyword: ""
+    };
   },
   methods: {
     showText: function(index) {
@@ -40,10 +45,19 @@ export default {
       store.commit("setPost", this.posts[id - 1]);
       store.commit("setRoom", id);
     },
-    copy() {
-      // const item = document.getElementsByClassName("card-text");
-      // item.select();
-      // document.execCommand("copy");
+    copy(index) {
+      let str = this.posts[index].text;
+      let listener = function(e) {
+        e.clipboardData.setData("text/plain", str);
+        // 本来のイベントをキャンセル
+        e.preventDefault();
+        // 終わったら一応削除
+        document.removeEventListener("copy", listener);
+      };
+      // コピーのイベントが発生したときに、クリップボードに書き込むようにしておく
+      document.addEventListener("copy", listener);
+      // コピー
+      document.execCommand("copy");
       this.$toasted.success("クリップボードにコピーしました！");
     },
     serch() {
@@ -183,10 +197,10 @@ export default {
   color: #e64e40;
 }
 .shortcat-copy {
-  font-size: 130%;
+  font-size: 120%;
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 105%;
+  top: 107%;
   left: 93%;
   z-index: 1;
 }

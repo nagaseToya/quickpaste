@@ -19,9 +19,6 @@ import store from "@/store";
 import router from "../router";
 
 export default {
-  data: function() {
-    return { keyword: "" };
-  },
   methods: {
     setRoom(id) {
       store.commit("setTittle", "");
@@ -44,11 +41,6 @@ export default {
           this.catch = error;
           router.push("/");
         });
-    }
-  },
-  mounted: {
-    posts: function() {
-      return this.$store.state.posts;
     }
   }
 };
