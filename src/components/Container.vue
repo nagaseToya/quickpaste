@@ -46,9 +46,9 @@ export default {
       store.commit("setRoom", id);
     },
     copy(index) {
-      let str = this.posts[index].text;
+      let text = this.posts[index].text;
       let listener = function(e) {
-        e.clipboardData.setData("text/plain", str);
+        e.clipboardData.setData("text/plain", text);
         // 本来のイベントをキャンセル
         e.preventDefault();
         // 終わったら一応削除
