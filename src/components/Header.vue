@@ -6,19 +6,12 @@
                 font-size:70px;
                 margin-top:10%;
     "
-    >
-      QuickPaste
-    </div>
+    >QuickPaste</div>
     <div class="addCard" @click="setRoom(0)">新規保存</div>
-    <div class="shorten" @click="shorten()">URL短縮水産</div>
+    <div class="shorten" @click="shorten()">URL短縮</div>
     <div class="shorten-cantainer">
       <div>
-        <input
-          class="input"
-          v-model="longUrl"
-          type="text"
-          placeholder="短縮したいURLを入力"
-        />
+        <input class="input" v-model="longUrl" type="text" placeholder="短縮したいURLを入力" />
         <div v-if="shortenUrl === ''">
           <button class="p-button" @click="shorten()">短縮</button>
         </div>
@@ -42,8 +35,8 @@ export default {
   data: function() {
     return {
       num: 0,
-      longUrl: "https://mae.chab.in/archives/2495",
-      shortenUrl: "",
+      longUrl: "",
+      shortenUrl: ""
     };
   },
   methods: {
@@ -65,10 +58,10 @@ export default {
         longurl;
       this.$axios
         .get(endpoint)
-        .then((response) => {
+        .then(response => {
           this.shortenUrl = response.data.data.url;
         })
-        .catch((e) => {
+        .catch(e => {
           alert(e);
         });
     },
@@ -95,12 +88,12 @@ export default {
         .then(function() {
           router.push("/signin");
         })
-        .catch((error) => {
+        .catch(error => {
           this.catch = error;
           router.push("/");
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -138,7 +131,7 @@ export default {
 .p-button {
   border-radius: 0.67em;
   border: 1px solid #454545; /* 枠線 */
-  margin: 8% 0% 4% 0%;
+  margin: 8% 0% 0% 0%;
 }
 .p-button:hover {
   background-color: #e1e1e1; /* 背景色 */
@@ -147,7 +140,7 @@ export default {
 .c-button {
   border-radius: 0.67em;
   border: 1px solid #454545; /* 枠線 */
-  margin: 4% 0% 4% 0%;
+  margin: 4% 0% 0% 0%;
 }
 .c-button:hover {
   background-color: #e1e1e1; /* 背景色 */

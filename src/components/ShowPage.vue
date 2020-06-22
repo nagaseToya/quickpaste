@@ -4,7 +4,11 @@
       <div>
         <div class="showtittle">開発者へメッセージ</div>
         <div class="dev-text-container" style="background-color:#f2f2f2;">
-          <textarea v-model="text" class="dev textlines" placeholder="使いずらかったポイントを教えてくれると嬉しいです！"></textarea>
+          <textarea
+            v-model="text"
+            class="dev textlines"
+            placeholder="使いずらかったポイントを教えてくれると嬉しいです！"
+          ></textarea>
           <div class="submit" @click="message()">送信</div>
         </div>
       </div>
@@ -14,9 +18,22 @@
         <div class="showtittle">新規保存</div>
         <div class="text-container" style="background-color:#f2f2f2;">
           <div class="text-tittle"></div>
-          <input v-model="tittle" type="text" class="input-tittle" placeholder="タイトル" />
-          <textarea v-model="text" class="textlines" placeholder="保存したい文章を記入してください！"></textarea>
-          <i class="fas fa-paperclip add-icon" v-tooltip.top-center="'保存'" @click="add()"></i>
+          <input
+            v-model="tittle"
+            type="text"
+            class="input-tittle"
+            placeholder="タイトル"
+          />
+          <textarea
+            v-model="text"
+            class="textlines"
+            placeholder="保存したい文章を記入してください！"
+          ></textarea>
+          <i
+            class="fas fa-paperclip add-icon"
+            v-tooltip.top-center="'保存'"
+            @click="add()"
+          ></i>
         </div>
       </div>
     </div>
@@ -25,11 +42,27 @@
         <div class="showtittle">{{ post.tittle }}</div>
         <div class="show-text-container">
           <div class="i-text-tittle">
-            <i class="far fa-copy copy-icon" v-tooltip.top-center="'コピー'" @click="copy()"></i>
-            <i class="far fa-trash-alt delete-icon" v-tooltip.top-center="'削除'" @click="del()"></i>
-            <i class="far fa-star star-icon" v-tooltip.top-center="'お気に入り'" @click="like"></i>
+            <i
+              class="far fa-copy copy-icon"
+              v-tooltip.top-center="'コピー'"
+              @click="copy()"
+            ></i>
+            <i
+              class="far fa-trash-alt delete-icon"
+              v-tooltip.top-center="'削除'"
+              @click="del()"
+            ></i>
+            <i
+              class="far fa-star star-icon"
+              v-tooltip.top-center="'お気に入り'"
+              @click="like"
+            ></i>
             <i v-if="post.liked" class="fas fa-star bg-star-icon"></i>
-            <i class="far fa-edit edit-icon" @click="edit" v-tooltip.top-center="'文面を編集し上書き'"></i>
+            <i
+              class="far fa-edit edit-icon"
+              @click="edit"
+              v-tooltip.top-center="'文面を編集し上書き'"
+            ></i>
           </div>
           <textarea
             id="inputId"
@@ -76,16 +109,16 @@ export default {
           tittle: this.tittle,
           text: this.text.replace(/\r?\n/g, "<br>"),
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          liked: false
+          liked: false,
         };
         db.collection("users")
           .doc(uid)
           .collection("posts")
           .add(post)
-          .then(doc => {
+          .then((doc) => {
             this.posts.push({
               id: doc.id,
-              ...post
+              ...post,
             });
           });
 
@@ -94,9 +127,9 @@ export default {
           .doc(uid)
           .collection("posts")
           .orderBy("createdAt");
-        this.unsubscribe = ref.onSnapshot(snapshot => {
+        this.unsubscribe = ref.onSnapshot((snapshot) => {
           let posts = [];
-          snapshot.forEach(doc => {
+          snapshot.forEach((doc) => {
             posts.push(doc.data());
           });
           this.posts = posts;
@@ -120,17 +153,17 @@ export default {
           tittle: this.post.tittle,
           text: this.post.text,
           liked: this.post.liked,
-          createdAt: this.post.createdAt
+          createdAt: this.post.createdAt,
         });
       this.$toasted.success("文章を編集しました！");
-      this.toDefault();
+      // this.toDefault();
     },
     copy() {
       const inputId = document.getElementById("inputId");
       inputId.select();
       document.execCommand("copy");
       this.$toasted.success("クリップボードにコピーしました！");
-      this.toDefault();
+      // this.toDefault();
     },
     del() {
       let user = firebase.auth().currentUser;
@@ -160,7 +193,7 @@ export default {
           tittle: this.post.tittle,
           text: this.post.text,
           liked: !this.post.liked,
-          createdAt: this.post.createdAt
+          createdAt: this.post.createdAt,
         });
       const text = this.post.liked
         ? "お気に入りを外しました！"
@@ -173,7 +206,7 @@ export default {
         const post = {
           id: this.posts.length,
           text: this.text.replace(/\r?\n/g, "　"),
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         };
         db.collection("users")
           .doc("jW7D9yu7IiY88pabMLA20NDofgE2")
@@ -191,7 +224,7 @@ export default {
     errToast: function(msg) {
       // main.jsで読み込んだので this.$toasted で呼び出せる
       this.$toasted.error(msg);
-    }
+    },
   },
   computed: {
     roomid: function() {
@@ -202,8 +235,8 @@ export default {
     },
     post: function() {
       return this.$store.state.post;
-    }
-  }
+    },
+  },
 };
 </script>
 
