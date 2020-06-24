@@ -116,12 +116,10 @@ export default {
     starSort() {
       let posts = [];
       if (!this.starSorted) {
-        if (this.keyword !== "") {
-          for (let i in this.$store.state.posts) {
-            let post = this.$store.state.posts[i];
-            if (post.liked == true) {
-              posts.push(post);
-            }
+        for (let i in this.$store.state.posts) {
+          let post = this.$store.state.posts[i];
+          if (post.liked == true) {
+            posts.push(post);
           }
         }
       } else {
